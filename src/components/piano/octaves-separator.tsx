@@ -1,14 +1,11 @@
 import React from 'react'
 import { css } from 'emotion'
 
-interface propTypes {
-  notesPerOctave: number
-  noteHeight: number
-  octaves: number
-}
-
 const wrapper = css`
+  padding: 0 2px;
   background-color: #eee;
+  font-size: 9px;
+  color: #888;
 `
 
 const octave = css`
@@ -17,16 +14,21 @@ const octave = css`
   border-bottom: 1px solid #ddd;
 `
 
+interface propTypes {
+  noteHeight: number
+  octaves: number
+  octavePattern: Array<number>
+}
+
 export default (props: propTypes) => (
   <div className={wrapper}>
     {new Array(props.octaves).fill(0).map((_, index) => (
       <div
         className={octave}
         key={index}
-        // -1 because border-bottom
-        style={{ height: props.noteHeight * props.notesPerOctave }}
+        style={{ height: props.noteHeight * props.octavePattern.length }}
       >
-        #{index + 1}
+        #{props.octaves - index}
       </div>
     ))}
   </div>

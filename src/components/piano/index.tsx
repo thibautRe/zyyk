@@ -5,10 +5,9 @@ import OctavesSeparator from './octaves-separator'
 import NotesSeparator from './notes-separator'
 
 const PianoRoll = () => {
-  const [notesPerOctave, setNotesPerOctaves] = useState(12)
-  const [pattern, setPattern] = useState([1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1])
-  const [octaves, setOctaves] = useState(5)
   const [noteHeight, setNoteHeight] = useState(10)
+  const [pattern, setPattern] = useState([1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1])
+  const [octaves, setOctaves] = useState(8)
 
   return (
     <div
@@ -16,21 +15,21 @@ const PianoRoll = () => {
         display: flex;
       `}
     >
-      <div style={{ width: 30 }}>
+      <div>
         <OctavesSeparator
-          notesPerOctave={notesPerOctave}
           octaves={octaves}
+          octavePattern={pattern}
           noteHeight={noteHeight}
         />
       </div>
-      <div style={{ width: 60 }}>
+      <div>
         <NotesSeparator
-          notesPerOctave={notesPerOctave}
           octaves={octaves}
-          pattern={pattern}
+          octavePattern={pattern}
           noteHeight={noteHeight}
         />
       </div>
+      <div style={{ flex: 1 }} />
     </div>
   )
 }
