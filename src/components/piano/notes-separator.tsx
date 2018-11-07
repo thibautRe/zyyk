@@ -1,8 +1,6 @@
 import React from 'react'
 import { css } from 'emotion'
-
-type octave = number
-type note = number
+import { useTheme } from '../../utils/theme'
 
 interface propTypes {
   noteHeight: number
@@ -10,29 +8,30 @@ interface propTypes {
   octavePattern: Array<number>
 }
 
-const getBgcolorFromPattern = (patternType: number): string => {
-  if (patternType) return '#FFF'
-  return 'black'
+const NotesSeparator = (props: propTypes) => {
+  const theme = useTheme()
+  return (
+    <>
+      {new Array(props.octaves).fill(null).map((_, octaveIndex) => (
+        <React.Fragment key={octaveIndex}>
+          {props.octavePattern.map((patternType, noteIndex) => (
+            <div
+              key={noteIndex}
+              className={css`
+                width: 50px;
+                border-bottom: 1px solid
+                  ${theme['pianoroll.notesleft.noteborder']};
+                background-color: ${Boolean(patternType)
+                  ? theme['pianoroll.notesleft.notemain']
+                  : theme['pianoroll.notesleft.notesecondary']};
+                height: ${props.noteHeight}px;
+              `}
+            />
+          ))}
+        </React.Fragment>
+      ))}
+    </>
+  )
 }
-
-const NotesSeparator = (props: propTypes) => (
-  <>
-    {new Array(props.octaves).fill(null).map((_, octaveIndex) => (
-      <React.Fragment key={octaveIndex}>
-        {props.octavePattern.map((patternType, noteIndex) => (
-          <div
-            key={noteIndex}
-            className={css`
-              width: 50px;
-              border-bottom: 1px solid #ddd;
-              background-color: ${getBgcolorFromPattern(patternType)};
-              height: ${props.noteHeight}px;
-            `}
-          />
-        ))}
-      </React.Fragment>
-    ))}
-  </>
-)
 
 export default NotesSeparator

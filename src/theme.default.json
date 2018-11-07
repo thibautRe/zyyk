@@ -1,0 +1,17 @@
+{
+  "main.primary": "red",
+  "main.secondary": "blue",
+  "main.shade.1": "#333",
+  "main.shade.2": "#666",
+  "main.shade.3": "#999",
+  "main.shade.4": "#CCC",
+  "main.shade.5": "#EEE",
+  "main.shade.6": "#FFF",
+
+  "pianoroll.notesleft.notemain": "main.shade.6",
+  "pianoroll.notesleft.notesecondary": "main.shade.1",
+  "pianoroll.notesleft.noteborder": "main.shade.5",
+  "pianoroll.octaves.background": "main.shade.5",
+  "pianoroll.octaves.text": "main.shade.2",
+  "pianoroll.octaves.border": "main.shade.4"
+}
