@@ -53,7 +53,7 @@ export const useThemeConfig = (defaultThemeID: string) => {
   useEffect(
     () => {
       setIsLoading(true)
-      import(/* webpackMode: "lazy" */ /* webpackInclude: /\.json$/ */
+      import(/* webpackMode: "lazy" */ /* webpackInclude: /\.json$/ */ /* webpackChunkName: "theme-[request]" */
       `../theme.${themeID}.json`)
         .then((theme) => {
           setTheme(

@@ -20,10 +20,16 @@ const useResizeCanvas = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
   }, [])
 }
 
+interface INote {
+  octave: number
+  note: number
+}
+
 interface propTypes {
   noteHeight: number
   octaves: number
   octavePattern: Array<number>
+  notes: Array<INote>
 }
 
 const Roll = (p: propTypes) => {
@@ -39,13 +45,13 @@ const Roll = (p: propTypes) => {
       if (!ctx) return
       const { width, height } = canvasRef.current.getBoundingClientRect()
 
-      // Double loop : octaves/notes
+      // Double loop : octaves/notes background
       new Array(p.octaves).fill(0).forEach((_, octave) => {
         p.octavePattern.forEach((noteType, note) => {
           // Note band
           ctx.fillStyle = Boolean(noteType)
-            ? theme['pianoroll.roll.notemain']
-            : theme['pianoroll.roll.notesecondary']
+            ? theme['pianoroll.roll.bg.notemain']
+            : theme['pianoroll.roll.bg.notesecondary']
           ctx.fillRect(
             0,
             (octave * p.octavePattern.length + note) *
@@ -61,16 +67,31 @@ const Roll = (p: propTypes) => {
 
           ctx.strokeStyle =
             note === p.octavePattern.length - 1
-              ? theme['pianoroll.roll.octaveborder']
-              : theme['pianoroll.roll.noteborder']
+              ? theme['pianoroll.roll.bg.octaveborder']
+              : theme['pianoroll.roll.bg.noteborder']
           ctx.beginPath()
           ctx.moveTo(0, pixelRatio * lineVerticalPos - 0.5)
           ctx.lineTo(width * pixelRatio, pixelRatio * lineVerticalPos - 0.5)
           ctx.stroke()
         })
       })
+
+      // Notes
+      const noteHeight = 2
+      p.notes.forEach((note) => {
+        ctx.fillStyle = theme['pianoroll.roll.note']
+        ctx.fillRect(
+          0,
+          ((note.octave * p.octavePattern.length + note.note + 0.5) *
+            p.noteHeight -
+            noteHeight) *
+            pixelRatio,
+          200,
+          noteHeight * pixelRatio,
+        )
+      })
     },
-    [p.noteHeight, p.octavePattern, p.octaves, theme],
+    [p.noteHeight, p.octavePattern, p.octaves, p.notes, theme],
   )
   return <canvas ref={canvasRef} className={canvasClassName} />
 }
