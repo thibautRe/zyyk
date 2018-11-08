@@ -4,6 +4,7 @@ import { css } from 'emotion'
 import OctavesSeparator from './octaves-separator'
 import NotesSeparator from './notes-separator'
 import Roll from './roll'
+import PianoWrapper from './wrapper'
 
 const defaultPattern = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1]
 
@@ -15,21 +16,11 @@ const PianoRoll = () => {
   const verticalProps = { noteHeight, octavePattern, octaves }
 
   return (
-    <div
-      className={css`
-        display: flex;
-      `}
-    >
-      <div>
-        <OctavesSeparator {...verticalProps} />
-      </div>
-      <div>
-        <NotesSeparator {...verticalProps} />
-      </div>
-      <div style={{ flex: 1 }}>
-        <Roll {...verticalProps} />
-      </div>
-    </div>
+    <PianoWrapper>
+      <OctavesSeparator {...verticalProps} />
+      <NotesSeparator {...verticalProps} />
+      <Roll {...verticalProps} />
+    </PianoWrapper>
   )
 }
 

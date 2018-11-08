@@ -11,7 +11,7 @@ interface propTypes {
 const NotesSeparator = (p: propTypes) => {
   const theme = useTheme()
   return (
-    <>
+    <div>
       {new Array(p.octaves).fill(null).map((_, octaveIndex) => (
         <React.Fragment key={octaveIndex}>
           {p.octavePattern.map((patternType, noteIndex) => (
@@ -32,7 +32,7 @@ const NotesSeparator = (p: propTypes) => {
           ))}
         </React.Fragment>
       ))}
-    </>
+    </div>
   )
 }
 
