@@ -1,19 +1,28 @@
 import React, { useState } from 'react'
 
 import PianoRoll from './components/piano'
-import ThemeContext, { useThemeConfig } from './utils/theme'
+import ThemePicker from './components/theme-picker'
+
+import { useThemeConfig, Provider } from './utils/theme'
 
 const App = () => {
-  const { setThemeID, themeID, theme, isLoading } = useThemeConfig('default')
+  const {
+    setThemeID,
+    themeID,
+    theme,
+    availableThemes,
+    isLoading,
+  } = useThemeConfig('default')
   return (
-    <ThemeContext.Provider value={theme}>
-      <p>Is loading: {isLoading.toString()}</p>
-      <p>
-        <button onClick={() => setThemeID('bluemoon')}>Go Bluemoon</button>
-      </p>
-      {/* <ThemePicker setTheme={setTheme} /> */}
+    <Provider value={theme}>
+      <ThemePicker
+        setThemeId={setThemeID}
+        themeID={themeID}
+        availableThemes={availableThemes}
+        isLoading={isLoading}
+      />
       <PianoRoll />
-    </ThemeContext.Provider>
+    </Provider>
   )
 }
 

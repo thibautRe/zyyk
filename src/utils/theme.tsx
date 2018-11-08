@@ -41,16 +41,14 @@ const resolveAndMemoizeTheme = (theme: themeInterface): themeInterface => {
 }
 
 // React hook to access theme
-export const useTheme = () => {
-  const theme = useContext(ThemeContext)
-  return resolveAndMemoizeTheme(theme)
-}
+export const useTheme = (): themeInterface => useContext(ThemeContext)
 
 // React hook to access theme config
 export const useThemeConfig = (defaultThemeID: string) => {
   const [isLoading, setIsLoading] = useState(false)
   const [themeID, setThemeID] = useState(defaultThemeID)
-  const [theme, setTheme] = useState(defaultTheme)
+  const [theme, setTheme] = useState(defaultTheme as themeInterface)
+  const availableThemes = ['default', 'bluemoon']
 
   useEffect(
     () => {
@@ -58,7 +56,9 @@ export const useThemeConfig = (defaultThemeID: string) => {
       import(/* webpackMode: "lazy" */ /* webpackInclude: /\.json$/ */
       `../theme.${themeID}.json`)
         .then((theme) => {
-          setTheme({ ...defaultTheme, ...theme.default })
+          setTheme(
+            resolveAndMemoizeTheme({ ...defaultTheme, ...theme.default }),
+          )
           setIsLoading(false)
         })
         .catch((err) => console.error(err))
@@ -66,9 +66,7 @@ export const useThemeConfig = (defaultThemeID: string) => {
     [themeID],
   )
 
-  return { themeID, theme, setThemeID, isLoading }
+  return { themeID, theme, setThemeID, availableThemes, isLoading }
 }
 
-export const Consumer = ThemeContext.Consumer
 export const Provider = ThemeContext.Provider
-export default ThemeContext
