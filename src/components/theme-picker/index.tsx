@@ -13,15 +13,22 @@ const ThemePicker = (p: propTypes) => {
   const theme = useTheme()
 
   return (
-    <div>
+    <div
+      className={css`
+        margin: 10px;
+      `}
+    >
       <select
         value={p.themeID}
         onChange={(event) => p.setThemeId(event.target.value)}
         className={css`
           appearance: none;
           background-color: ${theme['main.shade.6']};
-          border: 1px solid ${theme['main.shade.5']};
+          border: 1px solid ${theme['main.shade.4']};
           padding: 8px 20px;
+          border-radius: 4px;
+          text-align: center;
+          cursor: pointer;
         `}
       >
         {p.availableThemes.map((themeID) => (
