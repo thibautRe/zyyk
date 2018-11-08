@@ -8,23 +8,25 @@ interface propTypes {
   octavePattern: Array<number>
 }
 
-const NotesSeparator = (props: propTypes) => {
+const NotesSeparator = (p: propTypes) => {
   const theme = useTheme()
   return (
     <>
-      {new Array(props.octaves).fill(null).map((_, octaveIndex) => (
+      {new Array(p.octaves).fill(null).map((_, octaveIndex) => (
         <React.Fragment key={octaveIndex}>
-          {props.octavePattern.map((patternType, noteIndex) => (
+          {p.octavePattern.map((patternType, noteIndex) => (
             <div
               key={noteIndex}
               className={css`
                 width: 50px;
                 border-bottom: 1px solid
-                  ${theme['pianoroll.notesleft.noteborder']};
+                  ${noteIndex === p.octavePattern.length - 1
+                    ? theme['pianoroll.notesleft.octaveborder']
+                    : theme['pianoroll.notesleft.noteborder']};
                 background-color: ${Boolean(patternType)
                   ? theme['pianoroll.notesleft.notemain']
                   : theme['pianoroll.notesleft.notesecondary']};
-                height: ${props.noteHeight}px;
+                height: ${p.noteHeight}px;
               `}
             />
           ))}

@@ -8,11 +8,11 @@ import Roll from './roll'
 const defaultPattern = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1]
 
 const PianoRoll = () => {
-  const [noteHeight, setNoteHeight] = useState(10)
+  const [noteHeight, setNoteHeight] = useState(16)
   const [octavePattern, setOctavePattern] = useState(defaultPattern)
   const [octaves, setOctaves] = useState(8)
 
-  const commonProps = { noteHeight, octavePattern, octaves }
+  const verticalProps = { noteHeight, octavePattern, octaves }
 
   return (
     <div
@@ -21,13 +21,13 @@ const PianoRoll = () => {
       `}
     >
       <div>
-        <OctavesSeparator {...commonProps} />
+        <OctavesSeparator {...verticalProps} />
       </div>
       <div>
-        <NotesSeparator {...commonProps} />
+        <NotesSeparator {...verticalProps} />
       </div>
       <div style={{ flex: 1 }}>
-        <Roll {...commonProps} />
+        <Roll {...verticalProps} />
       </div>
     </div>
   )

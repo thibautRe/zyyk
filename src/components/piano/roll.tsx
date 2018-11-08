@@ -18,7 +18,10 @@ const Roll = (p: propTypes) => {
             <div
               key={noteIndex}
               className={css`
-                border-bottom: 1px solid ${theme['pianoroll.roll.noteborder']};
+                border-bottom: 1px solid
+                  ${noteIndex === p.octavePattern.length - 1
+                    ? theme['pianoroll.roll.octaveborder']
+                    : theme['pianoroll.roll.noteborder']};
                 background-color: ${Boolean(patternType)
                   ? theme['pianoroll.roll.notemain']
                   : theme['pianoroll.roll.notesecondary']};
