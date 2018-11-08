@@ -2,6 +2,11 @@ import React, { useRef, useEffect } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../../utils/theme'
 
+const canvasClassName = css`
+  align-self: stretch;
+  flex: 1;
+`
+
 const pixelRatio = Math.round(window.devicePixelRatio) || 1
 
 // Make sure the canvas has a HTML width and height that corresponds to its real size
@@ -67,15 +72,7 @@ const Roll = (p: propTypes) => {
     },
     [p.noteHeight, p.octavePattern, p.octaves, theme],
   )
-  return (
-    <canvas
-      ref={canvasRef}
-      className={css`
-        align-self: stretch;
-        flex: 1;
-      `}
-    />
-  )
+  return <canvas ref={canvasRef} className={canvasClassName} />
 }
 
 export default Roll

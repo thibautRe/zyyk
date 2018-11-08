@@ -21,17 +21,17 @@ interface propTypes {
   octavePattern: Array<number>
 }
 
-export default (props: propTypes) => {
+export default (p: propTypes) => {
   const theme = useTheme()
   return (
     <div className={wrapper(theme)}>
-      {new Array(props.octaves).fill(0).map((_, index) => (
+      {new Array(p.octaves).fill(0).map((_, index) => (
         <div
           className={octave(theme)}
           key={index}
-          style={{ height: props.noteHeight * props.octavePattern.length }}
+          style={{ height: p.noteHeight * p.octavePattern.length }}
         >
-          #{props.octaves - index}
+          #{p.octaves - index}
         </div>
       ))}
     </div>
