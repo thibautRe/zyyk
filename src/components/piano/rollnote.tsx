@@ -7,6 +7,7 @@ const marker = (theme: ITheme) => css`
   stroke: ${theme['pianoroll.roll.marker.outer']};
   stroke-width: 1px;
   cursor: grab;
+  z-index: 2;
 
   transition: 0.15s ease-out;
 
@@ -50,32 +51,32 @@ interface INotePosition {
 const RollNote = (p: propTypes) => {
   const theme = useTheme()
 
-  const { x: x0, y: y0 } = getPosition(
-    p.note[0],
-    p.noteHeight,
-    p.timeWidth,
-    p.levelsPerOctave,
-  )
-
-  const { x: x1, y: y1 } = getPosition(
-    p.note[1],
-    p.noteHeight,
-    p.timeWidth,
-    p.levelsPerOctave,
+  const notesPositions = p.note.map((notePart) =>
+    getPosition(notePart, p.noteHeight, p.timeWidth, p.levelsPerOctave),
   )
 
   return (
-    <>
-      <path
-        className={css`
-          stroke-width: 2px;
-        `}
-        style={{ stroke: theme['pianoroll.roll.note'] }}
-        d={`M${x0} ${y0} L${x1} ${y1}`}
-      />
-      <circle cx={x0} cy={y0} r={4} className={marker(theme)} />
-      <circle cx={x1} cy={y1} r={4} className={marker(theme)} />
-    </>
+    <g>
+      {/* Link paths */}
+      {notesPositions.map(
+        ({ x, y }, index) =>
+          index < p.note.length - 1 && (
+            <path
+              key={index}
+              className={css`
+                stroke-width: 2px;
+              `}
+              style={{ stroke: theme['pianoroll.roll.note'] }}
+              d={`M${x} ${y} L${notesPositions[index + 1].x} ${
+                notesPositions[index + 1].y
+              }`}
+            />
+          ),
+      )}
+      {notesPositions.map(({ x, y }, index) => (
+        <circle cx={x} cy={y} r={4} className={marker(theme)} key={index} />
+      ))}
+    </g>
   )
 }
 

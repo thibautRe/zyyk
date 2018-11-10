@@ -21,6 +21,7 @@ const generateNote = () => {
       level: Math.max(0, Math.min(level + levelShift, defaultPattern.length)),
       time: startTime + duration,
     },
+    { octave, level, time: startTime + (1 + Math.random() * 2) * duration },
   ]
 }
 
