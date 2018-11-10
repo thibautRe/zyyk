@@ -1,13 +1,13 @@
 import React, { useContext, useMemo, useState, useEffect } from 'react'
 import defaultTheme from '../theme.default.json'
 
-export interface themeInterface {
+export interface ITheme {
   [key: string]: string
 }
 
 // Resolve one key from the theme to its corresponding value
 const resolveKey = (
-  theme: themeInterface,
+  theme: ITheme,
   themeKey: string,
   recursivityCheck = 0,
 ): string => {
@@ -22,7 +22,7 @@ const resolveKey = (
   return theme[themeKey]
 }
 
-const resolveTheme = (theme: themeInterface): themeInterface =>
+const resolveTheme = (theme: ITheme): ITheme =>
   Object.keys(theme)
     .map((themeKey) => ({ [themeKey]: resolveKey(theme, themeKey) }))
     .reduce((a, b) => ({ ...a, ...b }), {})
@@ -32,7 +32,7 @@ const ThemeContext = React.createContext({})
 // Memoize the resolveTheme function manually
 let previousTheme = {}
 let memoizeResolvedTheme = {}
-const resolveAndMemoizeTheme = (theme: themeInterface): themeInterface => {
+const resolveAndMemoizeTheme = (theme: ITheme): ITheme => {
   if (previousTheme === theme) return memoizeResolvedTheme
 
   previousTheme = theme
@@ -41,13 +41,13 @@ const resolveAndMemoizeTheme = (theme: themeInterface): themeInterface => {
 }
 
 // React hook to access theme
-export const useTheme = (): themeInterface => useContext(ThemeContext)
+export const useTheme = (): ITheme => useContext(ThemeContext)
 
 // React hook to access theme config
 export const useThemeConfig = (defaultThemeID: string) => {
   const [isLoading, setIsLoading] = useState(false)
   const [themeID, setThemeID] = useState(defaultThemeID)
-  const [theme, setTheme] = useState(defaultTheme as themeInterface)
+  const [theme, setTheme] = useState(defaultTheme as ITheme)
   const availableThemes = ['default', 'bluemoon']
 
   useEffect(

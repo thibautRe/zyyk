@@ -1,15 +1,15 @@
 import React from 'react'
 import { css } from 'emotion'
-import { themeInterface, useTheme } from '../../utils/theme'
+import { ITheme, useTheme } from '../../utils/theme'
 
-const wrapper = (theme: themeInterface) => css`
+const wrapper = (theme: ITheme) => css`
   padding: 0 2px;
   background-color: ${theme['pianoroll.octaves.background']};
   font-size: 9px;
   color: ${theme['pianoroll.octaves.text']};
 `
 
-const octave = (theme: themeInterface) => css`
+const octave = (theme: ITheme) => css`
   display: flex;
   flex-direction: column-reverse;
   border-bottom: 1px solid ${theme['pianoroll.octaves.border']};

@@ -17,6 +17,9 @@
   "pianoroll.roll.bg.noteborder": "main.shade.5",
   "pianoroll.roll.bg.octaveborder": "main.shade.4",
   "pianoroll.roll.note": "main.primary",
+  "pianoroll.roll.marker.inner": "main.shade.6",
+  "pianoroll.roll.marker.inner:hover": "main.primary",
+  "pianoroll.roll.marker.outer": "main.shade.4",
   "pianoroll.octaves.background": "main.shade.5",
   "pianoroll.octaves.text": "main.shade.2",
   "pianoroll.octaves.border": "main.shade.4"
