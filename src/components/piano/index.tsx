@@ -4,6 +4,7 @@ import OctavesSeparator from './octaves-separator'
 import NotesSeparator from './notes-separator'
 import Roll from './roll'
 import PianoWrapper from './wrapper'
+import { INotePart } from './rollnote'
 
 const defaultPattern = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1]
 
@@ -35,11 +36,25 @@ const PianoRoll = () => {
   const verticalProps = { noteHeight, octavePattern, octaves }
   const horizontalProps = { timeWidth }
 
+  const testOnCreateNote = (notePart: INotePart) => {
+    console.log(notePart)
+
+    setNotes([
+      ...notes,
+      [notePart, { ...notePart, time: notePart.time + Math.random() * 5 }],
+    ])
+  }
+
   return (
     <PianoWrapper>
       <OctavesSeparator {...verticalProps} />
       <NotesSeparator {...verticalProps} />
-      <Roll {...verticalProps} {...horizontalProps} notes={notes} />
+      <Roll
+        {...verticalProps}
+        {...horizontalProps}
+        notes={notes}
+        testOnCreateNote={testOnCreateNote}
+      />
     </PianoWrapper>
   )
 }

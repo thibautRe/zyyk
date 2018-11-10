@@ -28,7 +28,7 @@ const getPosition = (
   y: (note.level + note.octave * levelsPerOctave) * noteHeight + noteHeight / 2,
 })
 
-interface INotePart {
+export interface INotePart {
   octave: number
   level: number
   time: number

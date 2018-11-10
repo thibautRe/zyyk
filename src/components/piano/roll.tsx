@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../../utils/theme'
-import RollNote, { INote } from './rollnote'
+import RollNote, { INote, INotePart } from './rollnote'
 
 const wrapper = css`
   flex: 1;
@@ -16,12 +16,31 @@ const svg = css`
   bottom: 0;
 `
 
+const getNotePartFromPosition = (
+  x: number,
+  y: number,
+  noteHeight: number,
+  timeWidth: number,
+  levelsPerOctave: number,
+): INotePart => {
+  const time = x / timeWidth
+  const levels = Math.floor(y / noteHeight)
+  const level = levels % levelsPerOctave
+  const octave = Math.floor(levels / levelsPerOctave)
+  return {
+    time,
+    level,
+    octave,
+  }
+}
+
 interface propTypes {
   noteHeight: number
   timeWidth: number
   octaves: number
   octavePattern: Array<number>
   notes: Array<INote>
+  testOnCreateNote: (note: INotePart) => void
 }
 
 const Roll = (p: propTypes) => {
@@ -66,6 +85,20 @@ const Roll = (p: propTypes) => {
         height="100%"
         width="100%"
         viewBox="0 0 100 100"
+        onClick={(e) => {
+          if (!svgRef.current) return
+          const { top, left } = svgRef.current.getBoundingClientRect()
+          const x = e.clientX - left
+          const y = e.clientY - top
+          const notePart = getNotePartFromPosition(
+            x,
+            y,
+            p.noteHeight,
+            p.timeWidth,
+            p.octavePattern.length,
+          )
+          p.testOnCreateNote(notePart)
+        }}
         ref={svgRef}
       >
         {p.notes.map((note, noteIndex) => (
