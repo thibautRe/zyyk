@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { css } from 'emotion'
 import { useTheme } from '../../utils/theme'
 import RollNote, { INote, INotePart } from './rollnote'
@@ -45,6 +45,7 @@ interface propTypes {
 
 const Roll = (p: propTypes) => {
   const theme = useTheme()
+  const [fantomNote, setFantomNote] = useState((null as any) as INote)
   const svgRef = useRef((null as unknown) as SVGSVGElement)
 
   // Set the viewBox to the container's size
@@ -99,8 +100,32 @@ const Roll = (p: propTypes) => {
           )
           p.testOnCreateNote(notePart)
         }}
+        onMouseMove={(e) => {
+          if (!svgRef.current) return
+          const { top, left } = svgRef.current.getBoundingClientRect()
+          const x = e.clientX - left
+          const y = e.clientY - top
+          const notePart = getNotePartFromPosition(
+            x,
+            y,
+            p.noteHeight,
+            p.timeWidth,
+            p.octavePattern.length,
+          )
+          setFantomNote([notePart, { ...notePart, time: notePart.time + 1 }])
+        }}
+        // onMouseOut={() => setFantomNote((null as any) as INote)}
         ref={svgRef}
       >
+        {fantomNote && (
+          <RollNote
+            note={fantomNote}
+            fantom
+            noteHeight={p.noteHeight}
+            timeWidth={p.timeWidth}
+            levelsPerOctave={p.octavePattern.length}
+          />
+        )}
         {p.notes.map((note, noteIndex) => (
           <RollNote
             key={noteIndex}

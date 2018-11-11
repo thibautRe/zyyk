@@ -2,20 +2,22 @@ import React from 'react'
 import { useTheme, ITheme } from '../../utils/theme'
 import { css } from 'emotion'
 
-const marker = (theme: ITheme) => css`
+const marker = (theme: ITheme, noHover = false) => css`
   fill: ${theme['pianoroll.roll.marker.inner']};
   stroke: ${theme['pianoroll.roll.marker.outer']};
   stroke-width: 1px;
-  cursor: grab;
-  z-index: 2;
 
-  transition: 0.15s ease-out;
-
-  &:hover {
-    fill: ${theme['pianoroll.roll.marker.inner:hover']};
-    stroke: ${theme['pianoroll.roll.marker.inner:hover']};
-    stroke-width: 4px;
-  }
+  ${!noHover &&
+    `
+    transition: 0.15s ease-out;
+    transition-property: fill, stroke, stroke-width;
+    cursor: grab;
+    &:hover {
+      fill: ${theme['pianoroll.roll.marker.inner:hover']};
+      stroke: ${theme['pianoroll.roll.marker.inner:hover']};
+      stroke-width: 4px;
+    }
+  `}
 `
 
 const getPosition = (
@@ -41,6 +43,7 @@ interface propTypes {
   noteHeight: number
   timeWidth: number
   levelsPerOctave: number
+  fantom?: boolean
 }
 
 interface INotePosition {
@@ -56,7 +59,7 @@ const RollNote = (p: propTypes) => {
   )
 
   return (
-    <g>
+    <g style={{ opacity: p.fantom ? 0.3 : 1 }}>
       {/* Link paths */}
       {notesPositions.map(
         ({ x, y }, index) =>
@@ -74,7 +77,13 @@ const RollNote = (p: propTypes) => {
           ),
       )}
       {notesPositions.map(({ x, y }, index) => (
-        <circle cx={x} cy={y} r={4} className={marker(theme)} key={index} />
+        <circle
+          cx={x}
+          cy={y}
+          r={4}
+          className={marker(theme, p.fantom)}
+          key={index}
+        />
       ))}
     </g>
   )

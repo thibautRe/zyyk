@@ -37,8 +37,6 @@ const PianoRoll = () => {
   const horizontalProps = { timeWidth }
 
   const testOnCreateNote = (notePart: INotePart) => {
-    console.log(notePart)
-
     setNotes([
       ...notes,
       [notePart, { ...notePart, time: notePart.time + Math.random() * 5 }],
