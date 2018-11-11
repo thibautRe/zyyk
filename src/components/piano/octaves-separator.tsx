@@ -21,7 +21,7 @@ interface propTypes {
   octavePattern: Array<number>
 }
 
-export default (p: propTypes) => {
+const OctavesSeparator = (p: propTypes) => {
   const theme = useTheme()
   return (
     <div className={wrapper(theme)}>
@@ -37,3 +37,5 @@ export default (p: propTypes) => {
     </div>
   )
 }
+
+export default React.memo(OctavesSeparator)

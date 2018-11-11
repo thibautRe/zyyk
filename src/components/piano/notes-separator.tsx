@@ -36,4 +36,4 @@ const NotesSeparator = (p: propTypes) => {
   )
 }
 
-export default NotesSeparator
+export default React.memo(NotesSeparator)

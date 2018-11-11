@@ -89,4 +89,4 @@ const RollNote = (p: propTypes) => {
   )
 }
 
-export default RollNote
+export default React.memo(RollNote)
